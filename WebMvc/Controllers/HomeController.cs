@@ -20,6 +20,9 @@ namespace WebMvc.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Message"] = "Home page";
+            ViewData["email"] = "guiaafre@gmail.com";
+
             return View();
         }
 
