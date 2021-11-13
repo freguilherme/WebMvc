@@ -18,7 +18,8 @@ namespace WebMvc.Data
         {
             if (_context.Department.Any() || 
                 _context.Seller.Any() || 
-                _context.SalesRecords.Any())
+                _context.SalesRecords.Any() ||
+                _context.User.Any())
             {
                 return;
             }

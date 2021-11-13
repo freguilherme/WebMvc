@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using WebMvc.Models;
+using WebMvc.Services;
 
 namespace WebMvc.Controllers
 {
     public class HomeController :Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserService _userService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
 
         public IActionResult Index()
@@ -35,6 +34,29 @@ namespace WebMvc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Login()
+        {
+            return NotFound();
+        }
+
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(string email, string pwd)
+        {
+            if (email == null && pwd == null)
+            {
+                //return RedirectToAction(nameof(Index));
+            }
+
+            var obj = _userService.Login(email, pwd);
+            if (obj == null)
+            {
+                //return RedirectToAction(nameof(Index));
+            }
+
+            return NotFound(); //RedirectToAction(nameof(Index));
         }
     }
 }
