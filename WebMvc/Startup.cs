@@ -42,6 +42,7 @@ namespace WebMvc
             services.AddScoped<SellerService>();
             services.AddScoped<DepartmentService>();
             services.AddScoped<UserService>();
+            services.AddScoped<SalesRecordService>();
 
             // session
             services.AddDistributedMemoryCache();
