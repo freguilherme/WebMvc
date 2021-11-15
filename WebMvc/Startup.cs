@@ -9,6 +9,11 @@ using WebMvc.Data;
 using WebMvc.Services;
 using System.Globalization;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace WebMvc
 {
@@ -32,10 +37,22 @@ namespace WebMvc
                     options.UseMySql(WebMvcContext, ServerVersion.AutoDetect(WebMvcContext), builder =>
                         builder.MigrationsAssembly("WebMvc")));
 
+            // dependencias
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerService>();
             services.AddScoped<DepartmentService>();
             services.AddScoped<UserService>();
+
+            // session
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,7 +90,7 @@ namespace WebMvc
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Users}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Login}/{id?}");
             });
         }
     }

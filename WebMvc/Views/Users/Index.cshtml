@@ -1,33 +1,5 @@
-﻿@model WebMvc.Models.ViewModels.UserFormViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
 
 <h1>@ViewData["Title"]</h1>
-
-<div class="text-center">
-    <hr />
-    <div>
-        <div class="form-group">
-            <label asp-for="User.Email" class="control-label">E-mail</label>
-            <input asp-for="User.Email" class="form-control" />
-            <span asp-validation-for="User.Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="User.Password" class="control-label">Senha</label>
-            <input asp-for="User.Password" class="form-control" />
-            <span asp-validation-for="User.Password" class="text-danger"></span>
-        </div>
-    </div>
-
-    <form asp-area="" asp-controller="Home" asp-action="Login">
-        <input type="submit" value="Login" class="btn btn-success" />
-        <hr />
-    </form>
-
-    <form asp-action="Create">
-        <input type="submit" value="Criar Usuário" class="btn btn-link" />
-        <hr />
-    </form>
-</div>

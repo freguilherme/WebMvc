@@ -1,0 +1,52 @@
+﻿@model WebMvc.Models.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    //cria a tag do formulário
+    @Html.AntiForgeryToken() // previne o ataque CSRF
+    @Html.ValidationSummary(true)
+    if (@ViewBag.Message != null)
+    {
+        <div style="border:1px solid red">
+            @ViewBag.Message
+        </div>
+    }
+    <table>
+        <tr>
+            <td>@Html.LabelFor(a => a.Email)</td>
+            <td>@Html.TextBoxFor(a => a.Email)</td>
+            <td>@Html.ValidationMessageFor(a => a.Email)</td>
+        </tr>
+        <tr>
+            <td> @Html.LabelFor(a => a.Password)</td>
+            <td> @Html.PasswordFor(a => a.Password) </td>
+            <td> @Html.ValidationMessageFor(a => a.Password) </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Logar" />
+            </td>
+            <td></td>
+        </tr>
+    </table>
+}
+
+<div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @{
+                Html.RenderPartial("Create");
+            }
+        </div>
+    </div>
+</div>
+<button id="open" data-toggle="modal" data-target="#showmodal">Novo User</button>
+
+

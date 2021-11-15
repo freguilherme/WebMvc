@@ -20,9 +20,9 @@ namespace WebMvc.Services
             _context.SaveChanges();
         }
 
-        public User Login(string email, string pwd)
+        public User Login(string email, string password)
         {
-            return _context.User.FirstOrDefault(obj => obj.Email == email && obj.Password == pwd);
+            return _context.User.FirstOrDefault(obj => obj.Email == email && obj.Password == password);
         }
     }
 }

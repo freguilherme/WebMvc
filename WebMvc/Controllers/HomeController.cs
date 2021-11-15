@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using WebMvc.Models;
 using WebMvc.Services;
+using System;
+using WebMvc.Models.ViewModels;
 
 namespace WebMvc.Controllers
 {
@@ -19,10 +22,16 @@ namespace WebMvc.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Message"] = "Home page";
-            ViewData["email"] = "guiaafre@gmail.com";
-
+            //ViewBag.aut = aut;
+            //return View();
+            //if (HttpContext.Session.GetString("usuarioLogadoID") != null)
+            //{
             return View();
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Login");
+            //}
         }
 
         public IActionResult Privacy()
@@ -38,25 +47,45 @@ namespace WebMvc.Controllers
 
         public IActionResult Login()
         {
-            return NotFound();
+            return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(string email, string pwd)
+        public IActionResult Login(string email, string password)
         {
-            if (email == null && pwd == null)
+            // esta action trata o post (login)
+            if (ModelState.IsValid) //verifica se é válido
             {
-                //return RedirectToAction(nameof(Index));
+                //var v = _context.User.FirstOrDefault(a => a.Email == u.Email && a.Password == u.Password);
+                var v = _userService.Login(email, password);
+                if (v != null)
+                {
+                    //HttpContext.Session.SetString("usuarioLogadoID", v.Email);
+                    //HttpContext.Session.SetString("nomeUsuarioLogado", v.Password);
+                    return RedirectToAction("Index");
+                }
             }
+            return View("Login");
+        }
 
-            var obj = _userService.Login(email, pwd);
-            if (obj == null)
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(User user)
+        {
+            if (!ModelState.IsValid)
             {
-                //return RedirectToAction(nameof(Index));
+                var viewModel = new UserFormViewModel { User = user };
+                return View(viewModel);
             }
+            _userService.Insert(user);
 
-            return NotFound(); //RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Login));
         }
     }
 }
