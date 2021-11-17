@@ -18,7 +18,7 @@ namespace WebMvc.Data
         {
             if (_context.Department.Any() || 
                 _context.Seller.Any() || 
-                _context.SalesRecords.Any() ||
+                _context.SalesRecord.Any() ||
                 _context.User.Any())
             {
                 return;
@@ -38,7 +38,7 @@ namespace WebMvc.Data
 
             _context.Department.AddRange(d1, d2, d3);
             _context.Seller.AddRange(s1, s2, s3);
-            _context.SalesRecords.AddRange(r1, r2, r3);
+            _context.SalesRecord.AddRange(r1, r2, r3);
 
             _context.SaveChanges();
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using WebMvc.Data;
 using WebMvc.Models;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +40,7 @@ namespace WebMvc.Services
                 _context.Seller.Remove(obj);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException)
             {
                 throw new IntegrityException("Impossivel deletar o vendedor, ela/ele tem vendas");
             }

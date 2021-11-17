@@ -1,20 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebMvc.Models;
 using WebMvc.Services;
 using WebMvc.Models.ViewModels;
-using System.Collections.Generic;
+using WebMvc.Data;
 using WebMvc.Services.Exceptions;
-using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace WebMvc.Controllers
 {
-    public class SellersController :Controller
+    public class SellersController : Controller
     {
         private readonly SellerService _sellerService;
         private readonly DepartmentService _departmentService;
 
-        public SellersController(SellerService sellerService, DepartmentService departmentService)
+        public SellersController(SellerService sellerService, 
+            DepartmentService departmentService)
         {
             _sellerService = sellerService;
             _departmentService = departmentService;

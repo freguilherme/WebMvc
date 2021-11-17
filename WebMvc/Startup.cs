@@ -9,9 +9,6 @@ using WebMvc.Data;
 using WebMvc.Services;
 using System.Globalization;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using System;
 
@@ -30,6 +27,7 @@ namespace WebMvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services.AddControllers();
 
             string WebMvcContext = Configuration.GetConnectionString("WebMvcContext");
 

@@ -2,6 +2,8 @@
 using WebMvc.Models;
 using WebMvc.Services;
 using WebMvc.Models.ViewModels;
+using Refit;
+using System.Threading.Tasks;
 
 namespace WebMvc.Controllers
 {
@@ -19,23 +21,12 @@ namespace WebMvc.Controllers
             return View();
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(User user)
+        public async Task<IActionResult> Index(string cep)
         {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new UserFormViewModel { User = user };
-                return View(viewModel);
-            }
-            _userService.Insert(user);
-
-            return RedirectToAction(nameof(Index));
+            var cepClient = RestService.For<ICepApiService>("https://viacep.com.br/");
+            var address = await cepClient.GetAddressAsync(cep);
+            return View(address);
         }
     }
 }

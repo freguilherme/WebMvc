@@ -1,5 +1,41 @@
-﻿@{
+﻿@model WebMvc.Models.CepResponse
+
+@{
     ViewData["Title"] = "Login";
 }
 
 <h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm("Index", "Users", FormMethod.Post))
+{
+<table>
+    <tr>
+        <td>@Html.LabelFor(a => a.Cep)</td>
+        <td>@Html.TextBoxFor(a => a.Cep)</td>
+        <td>@Html.ValidationMessageFor(a => a.Cep)</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <input type="submit" value="Buscar CEP" />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bairro)
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(item => item.Bairro)
+        </td>
+        <td>
+            @Html.DisplayFor(item => item.Logradouro)
+        </td>
+        <td>
+            @Html.DisplayFor(item => item.Localidade)
+        </td>
+    </tr>
+</table>
+}
