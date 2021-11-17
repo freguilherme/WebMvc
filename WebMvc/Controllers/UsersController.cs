@@ -27,6 +27,7 @@ namespace WebMvc.Controllers
             var cepClient = RestService.For<ICepApiService>("https://viacep.com.br/");
             var address = await cepClient.GetAddressAsync(cep);
             return View(address);
+
         }
     }
 }
